@@ -19,7 +19,7 @@ class Dictionary extends Model
     }
 
     public static function activeUserStatus(){
-        return self::userStatus()->where('sort',1)->first();
+        return self::userStatus()->where('sort',1)->get();
     }
 
     public static function dictionaryQuery($entity,$key){

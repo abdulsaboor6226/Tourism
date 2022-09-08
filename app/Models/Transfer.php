@@ -2,56 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class Transfer extends Model
 {
-    use Notifiable,HasRoles,SoftDeletes;
+    use HasFactory,SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name','email','phone','profile_image_url','email_verified_at','password','status_id'];
+    protected $fillable = ['vehicle_id','driver_id','passenger_id','from','to','departure_dateTime','reaching_dateTime','status_id'];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token','created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-    public function getProfileImageUrlAttribute($value){
-        return url(Storage::url($value));
-    }
     protected static function boot()
     {
 
@@ -85,8 +50,16 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
-
     public function status(){
         return $this->belongsTo(Dictionary::class,'status_id')->withDefault(dictionaryDefault());
+    }
+    public function vehicle(){
+        return $this->belongsTo(Vehicle::class,'vehicle_id')->withDefault(dictionaryDefault());
+    }
+    public function driver(){
+        return $this->belongsTo(User::class,'driver_id')->withDefault(dictionaryDefault());
+    }
+    public function passenger(){
+        return $this->belongsTo(User::class,'passenger_id')->withDefault(dictionaryDefault());
     }
 }

@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
+Auth::routes(['register' => false]);
 
 Auth::routes();
 
@@ -23,6 +24,7 @@ Auth::routes();
 Route::middleware('auth:web')->group(function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('user',UserController::class);
-
+    Route::resource('vehicle',VehicleController::class);
+    Route::resource('transfer',TransferController::class);
 });
 

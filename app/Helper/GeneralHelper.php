@@ -3,22 +3,11 @@
 
 use Illuminate\Http\Response;
 
-
-function responseBuilder($status = '', $data = [], $info = null)
+function dictionaryDefault(): array
 {
-    if ($data) {
-        $response = [
-            "status" => $status,
-            "message" => $info ? $info : Response::$statusTexts[$status],
-            "data" => $data
-        ];
-    } else {
-        $response = [
-            "status" => $status,
-            "message" => $info ? $info : Response::$statusTexts[$status],
-        ];
-    }
-
-
-    return response()->json($response);
+    return[
+        'id' => 0,
+        'value' => 'not found',
+        'meta' => ['color' => 'danger']
+    ];
 }

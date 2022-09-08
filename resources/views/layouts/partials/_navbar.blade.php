@@ -12,8 +12,8 @@
 
         </a>
         <a class="navbar-brand brand-logo-mini" href="{{url('/')}}">
-            <img src="{{asset('img/min-logo.svg')}}" alt="logo"/>
-
+            <h5>{{config('app.name')}}</h5>
+{{--            <img src="{{asset('img/min-logo.svg')}}" alt="logo"/>--}}
         </a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
@@ -83,7 +83,7 @@
             </li>
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    <img src="{{\Illuminate\Support\Facades\Auth::user()->profile_image_url}}" alt="profile"/>
+                    <img src="{{\Illuminate\Support\Facades\Auth::user()->profile_image_url}}" onerror="profileImgError(this);" alt="profile"/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
 {{--                    <a class="dropdown-item">--}}

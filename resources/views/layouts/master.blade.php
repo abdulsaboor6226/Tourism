@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Skydash Admin</title>
+    <title>Tourism Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{asset('backend')}}/vendors/feather/feather.css">
     <link rel="stylesheet" href="{{asset('backend')}}/vendors/ti-icons/css/themify-icons.css">
@@ -16,11 +16,23 @@
     <link rel="stylesheet" href="{{asset('backend')}}/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="{{asset('backend')}}/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('backend')}}/js/select.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('backend')}}/js/dropify.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{asset('backend')}}/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <!-- endinject -->
     <link rel="shortcut icon" href="{{asset('lifeline.png')}}" />
+    <script>
+        function profileImgError(image) {
+            image.onerror = "";
+            image.src = "{{asset('img/demo.png')}}";
+            return true;
+        }
+    </script>
 </head>
 <body>
 <div class="container-scroller">
@@ -46,6 +58,9 @@
                         </ul>
                     </div>
                 @endif
+                    @if(Session::has('message'))
+                        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+                    @endif
            @yield('content')
             </div>
             <!-- content-wrapper ends -->
@@ -72,6 +87,7 @@
 <script src="{{asset('backend')}}/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="{{asset('backend')}}/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
 <script src="{{asset('backend')}}/js/dataTables.select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script src="{{asset('backend')}}/vendors/typeahead.js/typeahead.bundle.min.js"></script>
 <script src="{{asset('backend')}}/vendors/select2/select2.min.js"></script>
@@ -83,6 +99,7 @@
 <script src="{{asset('backend')}}/js/template.js"></script>
 <script src="{{asset('backend')}}/js/settings.js"></script>
 <script src="{{asset('backend')}}/js/todolist.js"></script>
+<script src="{{asset('backend')}}/js/dropify.min.js"></script>
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="{{asset('backend')}}/js/dashboard.js"></script>
@@ -92,6 +109,8 @@
 <script src="{{asset('backend')}}/js/file-upload.js"></script>
 <script src="{{asset('backend')}}/js/typeahead.js"></script>
 <script src="{{asset('backend')}}/js/select2.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 <script>
     $(document).ready(function (){
@@ -99,8 +118,13 @@
         $('.filter-form input').on('change',function (){
             $('.filter-form').submit();
         });
-
     });
+    $('.dropify').dropify();
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 4000);
 </script>
 
 @stack('script')
